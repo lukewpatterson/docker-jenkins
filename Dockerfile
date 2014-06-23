@@ -1,7 +1,16 @@
-FROM ubuntu:13.10
-MAINTAINER Zaiste <oh [at] zaiste.net>
+FROM ubuntu:14.04
+MAINTAINER lukewpatterson@gmail.com
 
 RUN apt-get update
+
+# copied from https://github.com/jpetazzo/dind/blob/9130dc6627ac955ec877feb4a85b42deee3ca8fe/Dockerfile
+# Install Docker from Docker Inc. repositories.
+RUN apt-get install -qqy apt-transport-https
+RUN echo deb https://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
+RUN apt-get update -qq
+RUN apt-get install -qqy lxc-docker
+
 RUN apt-get -y install wget git
 
 RUN apt-get install -q -y openjdk-7-jre-headless && apt-get clean
