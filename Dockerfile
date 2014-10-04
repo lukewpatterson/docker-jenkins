@@ -20,6 +20,8 @@ RUN wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | apt-key a
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y jenkins
 
+RUN apt-get install --yes curl
+
 VOLUME /var/lib/jenkins
 ENV JENKINS_HOME /var/lib/jenkins
 
