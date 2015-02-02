@@ -30,4 +30,23 @@ EXPOSE 8080
 ADD run /usr/local/bin/run
 RUN chmod +x /usr/local/bin/run
 
+ENV FLEET_VERSION 0.9.0
+ENV FLEET_FOLDER fleet-v${FLEET_VERSION}-linux-amd64
+ENV FLEET_ARCHIVE fleet-v${FLEET_VERSION}-linux-amd64.tar.gz
+RUN mkdir --parents /downloads \
+  && cd /downloads \
+  && wget https://github.com/coreos/fleet/releases/download/v${FLEET_VERSION}/${FLEET_ARCHIVE} \
+  && tar --ungzip --extract --verbose --file ${FLEET_ARCHIVE}
+ENV PATH $PATH:/downloads/${FLEET_FOLDER}
+
+ENV ETCD_VERSION 2.0.0
+ENV ETCD_FOLDER etcd-v${ETCD_VERSION}-linux-amd64
+ENV ETCD_ARCHIVE etcd-v${ETCD_VERSION}-linux-amd64.tar.gz
+RUN mkdir --parents /downloads \
+  && cd /downloads \
+  && wget https://github.com/coreos/etcd/releases/download/v${ETCD_VERSION}/${ETCD_ARCHIVE} \
+  && tar --ungzip --extract --verbose --file ${ETCD_ARCHIVE}
+ENV PATH $PATH:/downloads/${ETCD_FOLDER}
+
+
 CMD /usr/local/bin/run
