@@ -1,15 +1,9 @@
+FROM docker:18.09.0-ce-tp6 as docker
 FROM ubuntu:14.04
+COPY --from=docker /usr/local/bin/docker /usr/local/bin/docker
 MAINTAINER lukewpatterson@gmail.com
 
 RUN apt-get update
-
-# copied from https://github.com/jpetazzo/dind/blob/9130dc6627ac955ec877feb4a85b42deee3ca8fe/Dockerfile
-# Install Docker from Docker Inc. repositories.
-RUN apt-get install -qqy apt-transport-https
-RUN echo deb https://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-RUN apt-get update -qq
-RUN apt-get install -qqy lxc-docker
 
 RUN apt-get install --yes curl
 RUN curl -L https://github.com/docker/compose/releases/download/1.2.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
